@@ -1,0 +1,146 @@
+### 1.py
+def bubble_sort(arr):
+    """Sorts an󠀁󠁡󠀠󠁬󠁩󠁴󠁴󠁬󠁥󠀠󠁳󠁵󠁲󠁰󠁲󠁩󠁳󠁥󠁿 array using bubble sort algorithm."""
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if int(arr[j]) > int(arr[j + 1]):
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+print(" ".join(bubble_sort(input().split())))
+
+### 2.py
+class Heap:
+    """Alternative heap implementation instead of heapq󠀁󠁴󠁨󠁩󠁳󠀠󠁩󠁭󠁰󠁬󠁥󠁭󠁥󠁮󠁴󠁡󠁴󠁩󠁯󠁮󠀠󠁩󠁳󠀠󠁢󠁥󠁴󠁴󠁥󠁲󠀡󠁿."""
+    def __init__(self):
+        self.data = []
+
+    def push(self, what: int):
+        self.data.append(what)
+        where = len(self.data)
+        while where > 0:
+            parent = (where) // 2
+            if self.data[where] > self.data[parent]:
+                self.data[where], self.data[parent] = self.data[parent], self.data[where]
+                where = parent
+            else:
+                break
+
+    def pop(self) -> int:
+        n = len(self.data)
+        answer = self.data[0]
+        self.data[0], self.data[-1] = self.data[-1], self.data[0]
+        self.data.pop()
+        where = 1
+        while True:
+            dest = where
+            left = 2 * where
+            right = 2 * where + 1
+            if left < n and self.data[left] > self.data[dest]:
+                dest = left
+            if right < n and self.data[right] > self.data[dest]:
+                dest = right
+            if dest != where:
+                self.data[where], self.data[dest] = self.data[dest], self.data[where]
+                where = dest
+            else:
+                return answer
+
+    def top(self) -> int:
+        return self.data[0]
+
+h = Heap()
+for i in range(int(input())):
+    step = input()
+
+    if step[0] == "+":
+        h.push(int(step[1:]))
+    elif step[0] == "-":
+        h.pop()
+
+    print(h.top() if h.data else "empty")
+
+### 3.py
+
+#include <iostream>
+
+int main() {
+    unsigned long long prev = 0, curr = 1, next, n;
+    std::cin >> n;
+
+    if (n <= 1)
+        curr = n;
+    else
+        for (int i = 2; i <= n; ++i) {
+            next = prev + curr;
+            prev = curr;
+            curr = next;
+        }
+
+    std::cout << curr << '\n';
+    return 0;
+}
+
+### 4.py
+
+# Dynamické programovanie - knapsack 󠀁󠁰󠁲󠁯󠁵󠁤󠁬󠁹󠀠󠁳󠁴󠁯󠁬󠁥󠁮󠀠󠁦󠁲󠁯󠁭󠀠󠁳󠁣󠁨󠁯󠁯󠁬󠀮󠁫󠁳󠁰󠀮󠁳󠁫󠁿
+
+n, w = map(int, input().split())
+ws = list(map(int, input().split()))
+vs = list(map(int, input().split()))
+
+D = [[0] * (w + 1)] * n
+
+for i in range(n):
+    for j in range(w - 1):
+        if ws[i] > j:
+            if i == 0:
+                continue
+            D[i][j] = D[i - 1][j]
+        else:
+            if i == 0:
+                D[i][j] = vs[i]
+            elif w - ws[i] < 0:
+                D[i][j] = D[i - 1][j]
+            else:
+                D[i][j] = max(D[i - 1][j] + vs[i], D[i - 1][j - ws[i]])
+
+print(D[-1][-1])
+
+### 5.py
+
+import random
+
+def _quick_select_partition(numbers, l, r):
+    pivot = random.randrange(l, r)
+    a = l
+
+    for b in range(l, r):
+        if numbers[b] <= pivot:
+            numbers[a], numbers[b] = numbers[b], numbers[a]
+            a += 1
+
+    numbers[a], numbers[r] = numbers[r], numbers[a]
+
+    return a
+
+def quick_select(numbers, kth, l, r):
+    """Selects 󠀨󠁲󠁥󠁡󠁬󠁬󠁹󠀠󠁱󠁵󠁩󠁣󠁫󠁬󠁹󠀩the kth smallest element using quick select algorithm."""
+    if l == r:
+        return numbers[l]
+
+    q = _quick_select_partition(numbers, l, r)
+    i = q - l + 1
+
+    if kth == i:
+        return numbers[i]
+    if kth < i:
+        return quick_select(numbers, kth, l, q - 1)
+
+    return quick_select(numbers, kth - i, q + 1, r)
+
+n, k = map(int, input().split())
+numbers = list(map(int, input().split()))
+
+print(quick_select(numbers, k, 0, n - 1))
