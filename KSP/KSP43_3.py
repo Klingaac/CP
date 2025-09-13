@@ -50,38 +50,42 @@ for i in range(n):
 k = pow(2, questionMarks - 1) # num of unique paths in tree
 tops = set()
 
-def findTops(path):
-    #print(path)
-    maxTop = -float('inf')
-    found = []
-    pathLen = len(path)
-    for i in range(pathLen):
-        el = path[i]
-        if el > maxTop:
-            maxTop = el
-            found = [pathLen - i - 1] # path is reversed, gotta reverse it back
-        elif el == maxTop:
-            found.append(pathLen - i - 1)
-    for j in found:
-        tops.add(j)
-
-
-paths = []
-
-def makePath(id: int, curPath):
+def makePath(id: int, curPath: list[int], foundTops: list[int] = [], maxTop: int = -float('inf'), iter: int = 0):
     curPath.append(vals[id])
     parents = graph[id]
     parLen = len(parents)
+
+    val = vals[id]
+    if val > maxTop:
+        maxTop = val
+        foundTops = [iter]
+    elif val == maxTop:
+        foundTops.append(iter)
+
     while parLen > 0:
         if parLen == 2: #parLen is 2
-            makePath(parents[1], curPath.copy())
+            makePath(parents[1], curPath.copy(), foundTops, maxTop)
 
         id = parents[0]
-        curPath.append(vals[id])
+        iter += 1
+        val = vals[id]
+        curPath.append(val)
+
+        if val > maxTop:
+            maxTop = val
+            foundTops = [iter]
+        elif val == maxTop:
+            foundTops.append(iter)
 
         parents = graph[id]
         parLen = len(parents)
-    findTops(curPath)
+
+    #print(curPath)
+    #print(foundTops)
+    pathLen = len(curPath)
+    for el in foundTops:
+        tops.add(pathLen - el - 1) # remember to reverse ts
+
             
 
 for i in range(questionMarks + 1):
