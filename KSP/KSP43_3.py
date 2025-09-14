@@ -83,6 +83,8 @@ def makePath(id: int, curPath: list[int], foundTops: list[int] = [], maxTop: int
     #print(curPath)
     #print(foundTops)
     pathLen = len(curPath)
+    if pathLen != n + 1:
+        raise Exception(f"pathLen: {pathLen}, n + 1: {n + 1}")
     for el in foundTops:
         tops.add(pathLen - el - 1) # remember to reverse ts
 
