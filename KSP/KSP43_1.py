@@ -3,6 +3,7 @@ n = len(s)
 headFound = False
 cur = 0
 lenSum = 0
+
 for i in range(n):
   l = s[i]
   if cur > 0:

@@ -21,9 +21,9 @@ def quick_select(numbers, kth, l, r):
         return numbers[l]
 
     q = _quick_select_partition(numbers, l, r)
-    i = q - l + 1
+    i = q - l + 1 #was q - l + 1
 
-    if kth == i:
+    if kth - 1 == q - l:
         return numbers[i]
     if kth < i:
         return quick_select(numbers, kth, l, q - 1)
