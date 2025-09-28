@@ -1,0 +1,12 @@
+Z reťazca núl a jednotiek získame najmenší počet zmien tak, že skúsime všetky možnosti a vyberieme tú, kde sme zmenili najmenej číslic, preto vždy nájdeme správnu odpoveď.
+
+Najprv si vytvoríme prefix sum list, číslo na každom indexe "i" v tomto liste znamená, koľko jednotiek sme našli od 0 po "i". List má rovnakú dĺžku ako n, preto využívame O(n) priestoru.
+
+Cez list číslic iterujem po jednom, teda komplexita času je O(n). 
+
+Pri každom indexe "i" zistím, koľko jednotiek treba zmeniť na nuly - túto hodnotu nájdeme v prefix sum liste na indexe "i + 1".
+
+Taktiež zistím počet núl ktoré treba zmeniť - rozdiel počtu všetkých číslic od i + 1 po n a súčtu všetkých jednotiek mínus počet jednotiek ktore treba zmeniť pri indexe i. Zistím to vzorcom (n - (i + 1) - (vsetky_jednotky - zmenene_jednotky)
+
+Tieto dve hodnoty sčítam, dostávam celkový počet číslic ktoré potrebujeme zmeniť. Ak je to zatial najmenší počet aký sme našli, uložíme si ho.
+
