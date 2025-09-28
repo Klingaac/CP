@@ -1,0 +1,11 @@
+V pamäti si držíme 3 premmené: súčet všetkých dĺžok hadov, dĺžku hada ktorého práve počítame a či sme našli hlavu (symbol "O") tohto hada.
+
+Keďže využívame vždy rovnako veľa priestoru, nezáležiac od n, využívame O(1) priestoru.
+
+Za O(n) času prejdeme po každom symbole zo stringu raz.
+
+Ak momentálne nesčítavame dĺžku žiadneho hada, skontrolujeme, či je momentálny symbol "~" (jazyk hada), či niesme na konci stringu a či je nasledujúci symbol "O" (hlava). Ak áno, začneme počítať dĺžku nového hada.
+
+Na ďalšej iterácii buď: pripočítame 1 k dĺžke hada ak je symbol "=", preskočíme iteráciu ak je symbol hlavou hada, ukončíme počítanie hada a pripočítame jeho dĺžku k ostatným. Ak nám ani jedna možnosť nesedí, začneme hladať nového hada bez pripočítania tohto. 
+
+Aby sme sa uistili, že má had len jednu hlavu, máme premenný bool ktorý nastavíme na True keď prvýkrát nájdeme hlavu v hadovi. Ak nájdeme druhú hlavu, bude sa počítať ako nesprávny symbol a hada prestaneme počítať.
